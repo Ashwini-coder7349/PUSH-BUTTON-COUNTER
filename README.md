@@ -60,3 +60,7 @@ Step 6: Test the Circuit
 2. Observe the counter value displayed on the 7-segment display or LCD display.
 
 That's it! You have successfully designed a simple embedded system using an Arduino microcontroller to count and display the number of times a push button is pressed.
+
+**OUTPUT:
+
+![Image](https://github.com/user-attachments/assets/f11548eb-d249-4022-a553-56dff78a3b52)
