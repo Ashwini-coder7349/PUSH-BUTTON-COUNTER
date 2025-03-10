@@ -1,0 +1,70 @@
+Components Needed:
+Arduino Uno (or any compatible Arduino board)
+Push button
+10kΩ resistor
+16x2 LCD display
+Breadboard and jumper wires
+
+Circuit Diagram:
+Push Button:
+Connect one leg of the push button to a digital pin on the Arduino (e.g., pin 2).
+Connect the other leg of the push button to the ground (GND).
+Connect a 10kΩ resistor between the digital pin (e.g., pin 2) and the 5V supply to act as a pull-up resistor.
+
+LCD Display:
+Connect the LCD pins to the Arduino as follows:
+RS to digital pin 12
+E to digital pin 11
+D4 to digital pin 5
+D5 to digital pin 4
+D6 to digital pin 3
+D7 to digital pin 2
+Connect the VSS pin of the LCD to GND.
+Connect the VDD pin of the LCD to 5V.
+Connect the V0 pin of the LCD to the middle pin of a 10kΩ potentiometer (for contrast adjustment), with the other two pins of the potentiometer connected to 5V and GND.
+Connect the RW pin of the LCD to GND.
+Connect the A (anode) pin of the LCD backlight to 5V through a current-limiting resistor (e.g., 220Ω).
+Connect the K (cathode) pin of the LCD backlight to GND.
+
+Arduino Code:
+#include <LiquidCrystal.h>
+
+// Initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+const int buttonPin = 2;  // Pin where the push button is connected
+int buttonState = 0;      // Variable for reading the push button status
+int lastButtonState = 0;  // Variable to store the last button state
+int count = 0;            // Variable to store the count of button presses
+
+void setup() {
+  // Set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("Button Presses:");
+  
+  // Initialize the push button pin as an input:
+  pinMode(buttonPin, INPUT);
+}
+
+void loop() {
+  // Read the state of the push button value:
+  buttonState = digitalRead(buttonPin);
+
+  // Check if the button is pressed
+  if (buttonState != lastButtonState) {
+    if (buttonState == HIGH) {
+      // If the current state is HIGH then the button was pressed
+      count++;
+      // Clear the second row of the LCD
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+      // Set the cursor to the second row, first column
+      lcd.setCursor(0, 1);
+      // Print the count of button presses
+      lcd.print(count);
+    }
+    // Save the current state as the last state, for next time through the loop
+    lastButtonState = buttonState;
+  }
+}
